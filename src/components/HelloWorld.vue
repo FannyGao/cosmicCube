@@ -1,39 +1,36 @@
-<script setup>
-import { ref } from 'vue'
-
-defineProps({
-  msg: String,
-})
-
-const count = ref(0)
-</script>
-
 <template>
-  <h1>{{ msg }}</h1>
-
-  <div class="card">
-    <button type="button" @click="count++">count is {{ count }}</button>
-    <p>
-      <code>components/HelloWorld.vue</code> to test HMR
-    </p>
-  </div>
-
-  <p>
-    Check out
-    <a href="https://vuejs.org/guide/quick-start.html#local" target="_blank"
-      >create-vue</a
-    >, the official Vue + Vite starter
-  </p>
-  <p>
-    Install
-    <a href="https://github.com/vuejs/language-tools" target="_blank">Volar</a>
-    in your IDE for a better DX
-  </p>
-  <p class="read-the-docs">Click on the Vite and Vue logos to learn more</p>
+    <input ref="file" type="file" @change="readFile" />
 </template>
 
-<style scoped>
-.read-the-docs {
-  color: #888;
+<script setup>
+import {ref} from 'vue'
+const electron = require('electron')
+const {ipcRenderer} = electron
+const file = ref(null)
+
+const readFile = () => {
+    const inputPath = file.value.files[0].path, 
+        arr = inputPath.split('.'),
+        outputPath = `${arr[0]}-draco.${arr[1]}`
+    
+    ipcRenderer.send('compress-gltf', {
+        inputPath,
+        outputPath,
+        options: {
+            dracoOptions: {
+                compressionLevel: 10,
+            }
+        }
+    })
+    ipcRenderer.on('compress-gltf-done', (eve, res) => {
+        console.log('渲染进程 ',eve, res)
+    })
+    ipcRenderer.on('compress-gltf-error', (eve, res) => {
+        console.log('渲染进程fail ',eve, res)
+    })
 }
+
+</script>
+
+<style scoped>
 </style>

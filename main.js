@@ -2,13 +2,15 @@
  * @Description: 
  * @Author: gaoyating
  * @Date: 2023-08-01 16:06:44
- * @LastEditTime: 2023-08-02 13:52:00
+ * @LastEditTime: 2023-08-02 19:50:15
  * @LastEditors: gaoyating
  */
 // app 控制应用程序的事件生命周期 BrowerWinkdow 创建和管理应用程序窗口
-const { app, BrowserWindow } = require('electron')
+const { app, BrowserWindow, ipcMain } = require('electron')
 const path = require('path')
 const isDev = require('electron-is-dev')
+const {processGltf} = require('gltf-pipeline')
+const fsExtra = require('fs-extra')
 
 const createWindow = () => {
     const win = new BrowserWindow({
@@ -42,4 +44,20 @@ app.whenReady().then(() => {
 // 关闭所有窗口时退出应用
 app.on('window-all-closed',()=>{
     if(process.platform !== 'darwin') app.quit()
+})
+
+const compressGltf = (inputPath, outputPath, options) => {
+    const gltf = fsExtra.readJsonSync(inputPath);
+    return new Promise((resolve, reject) => {
+        processGltf(gltf,options).then(res => {
+            fsExtra.writeJSONSync(outputPath, res.gltf)
+            resolve(outputPath)
+        }).catch(err=>reject(err))
+    })
+}
+
+ipcMain.on('compress-gltf', (event, payload) => {
+    compressGltf(payload.inputPath, payload.outputPath, payload.options)
+        .then(res=>event.sender.send('compress-gltf-done', res))
+        .catch(err => event.sender.send('compress-gltf-error', err))
 })
