@@ -1,0 +1,8 @@
+{
+    "productName": "CosmicCube",
+    "files": ["./main.js", "./dist"],
+    "extraFiles": [],
+    "directories": {
+        "output": "./builder"
+    }
+}
