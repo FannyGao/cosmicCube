@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: gaoyating
  * @Date: 2023-08-01 16:06:44
- * @LastEditTime: 2023-08-02 19:50:15
+ * @LastEditTime: 2023-08-03 11:01:54
  * @LastEditors: gaoyating
  */
 // app 控制应用程序的事件生命周期 BrowerWinkdow 创建和管理应用程序窗口
@@ -16,6 +16,7 @@ const createWindow = () => {
     const win = new BrowserWindow({
       width: 800,
       height: 600,
+      icon: path.join(__dirname, './public/logo48x48.ico'),
       webPreferences: {
         // 书写渲染进程中的配置
         nodeIntegration: true, // vue文件中可以引入node和electron相关API
