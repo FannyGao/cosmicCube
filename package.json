@@ -13,6 +13,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@element-plus/icons": "^0.0.11",
     "electron-reload": "^2.0.0-alpha.1",
     "element-plus": "^2.3.9",
     "gltf-pipeline": "^4.1.0",

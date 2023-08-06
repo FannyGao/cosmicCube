@@ -1,9 +1,9 @@
 /*
- * @Description: 
+ * @Description: vite项目配置文件
  * @Author: gaoyating
  * @Date: 2023-08-01 16:02:37
- * @LastEditTime: 2023-08-02 20:37:06
- * @LastEditors: gaoyating
+ * @LastEditTime: 2023-08-05 20:47:22
+ * @LastEditors: wangfengxiang
  */
 import { defineConfig } from 'vite'
 import vue from '@vitejs/plugin-vue'
