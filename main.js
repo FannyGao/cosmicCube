@@ -1,10 +1,11 @@
 /*
- * @Description: 
+ * @Description: 主进程文件
  * @Author: gaoyating
  * @Date: 2023-08-01 16:06:44
- * @LastEditTime: 2023-08-03 11:01:54
- * @LastEditors: gaoyating
+ * @LastEditTime: 2023-08-05 20:57:20
+ * @LastEditors: wangfengxiang
  */
+
 // app 控制应用程序的事件生命周期 BrowerWinkdow 创建和管理应用程序窗口
 const { app, BrowserWindow, ipcMain } = require('electron')
 const path = require('path')
